@@ -329,8 +329,8 @@
         .code-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 36px;
-            margin-top: 60px;
+            gap: 24px;
+            margin-top: 48px;
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
@@ -338,7 +338,7 @@
 
         .code-item {
             text-align: center;
-            padding: 40px 20px;
+            padding: 32px 20px;
             border: 2px solid currentColor;
             transition: transform 0.4s ease;
             position: relative;
@@ -556,6 +556,143 @@
             }
         }
 
+        /* ─── Hero layout fix ───────────────────────────────────── */
+        #hero {
+            justify-content: space-between;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-top: 220px;
+            padding-bottom: 60px;
+        }
+
+        #hero .container {
+            width: 100%;
+        }
+
+        .hero-scroll-indicator {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0 40px;
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+
+        .scroll-line {
+            width: 48px;
+            height: 1px;
+            background: rgba(255,255,255,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: white;
+            animation: scrollSlide 1.8s ease-in-out infinite;
+        }
+
+        @keyframes scrollSlide {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* ─── Contact section ────────────────────────────────────── */
+        #contact {
+            flex-direction: column;
+            justify-content: center;
+            gap: 0;
+        }
+
+        .contact-divider {
+            width: 60px;
+            height: 1.5px;
+            background: #2d3436;
+            margin: 40px 0;
+            opacity: 0.2;
+        }
+
+        .contact-email {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: #2d3436;
+            text-decoration: none;
+            border-bottom: 3px solid #d63031;
+            transition: color 0.3s ease;
+            line-height: 1.1;
+            display: inline-block;
+        }
+
+        .contact-email:hover {
+            color: #d63031;
+        }
+
+        .contact-social {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #2d3436;
+            text-decoration: none;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-social:hover {
+            opacity: 1;
+        }
+
+        /* ─── Centered logo splash ───────────────────────────────── */
+        .logo-splash {
+            position: fixed;
+            top: 31px; /* aligns with nav logo baseline area */
+            left: 40px;
+            z-index: 1100;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            color: white;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            pointer-events: none;
+            /* start: centered horizontally, top of hero — above the copy */
+            transform: translate(calc(50vw - 40px - 50%), 68px) scale(3.5);
+            font-size: 22px;
+            transition:
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.4s ease,
+                opacity 0.4s ease;
+            will-change: transform;
+        }
+
+        .logo-splash.scrolled {
+            transform: translate(0, 0) scale(1);
+            color: #2c5aa0;
+            pointer-events: auto;
+        }
+
+        .logo-splash.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* hide real nav logo until splash departs */
+        .logo.nav-logo-hidden {
+            opacity: 0;
+        }
+        .logo {
+            transition: opacity 0.3s ease;
+        }
+
         /* Smooth scroll */
         html {
             scroll-behavior: smooth;
@@ -570,7 +707,7 @@
     <!-- Header -->
     <header class="header" id="header">
         <nav class="nav">
-            <a href="#" class="logo">FERRO</a>
+            <a href="#" class="logo nav-logo-hidden" id="navLogo">FERRO</a>
             <ul class="nav-links">
                 <li><a href="#approach">Approach</a></li>
                 <li><a href="#services">Services</a></li>
@@ -583,6 +720,9 @@
             </button>
         </nav>
     </header>
+
+    <!-- Centered splash logo -->
+    <a href="#" class="logo-splash" id="logoSplash">FERRO</a>
 
     <!-- Mobile full-screen menu -->
     <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
@@ -603,6 +743,10 @@
             <p class="section-content animate-in stagger-1">
                 At FERRO, we build symbolic systems that transform brands into living cultural organisms. We decode the emotional, ideological, and narrative blueprint at your brand's core — and manifest it across experiences, communication, and form.
             </p>
+        </div>
+        <div class="hero-scroll-indicator animate-in stagger-2">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
@@ -648,7 +792,7 @@
     </section>
 
     <!-- Symbolic Code - White Background -->
-    <section class="section white">
+    <section class="section white" style="min-height: auto; padding: 100px 0;">
         <div class="container">
             <h2 class="section-title animate-in text-reveal">Symbolic<br>Code.</h2>
             <p class="section-content animate-in stagger-1">
@@ -767,19 +911,44 @@
     <section class="section white" id="contact">
         <div class="container">
             <h2 class="section-title animate-in text-reveal">Ready to<br>Decode?</h2>
-            <p class="section-content animate-in stagger-1">
-                Let's build your cultural narrative together.
-            </p>
+            <div class="contact-divider animate-in stagger-1"></div>
             <div class="contact-info animate-in stagger-2">
-                <p class="quote">hello@ferro.world</p>
-                <p class="quote" style="margin-top: 20px;">
-                    <a href="https://instagram.com/ferro.world" target="_blank" style="color: inherit; text-decoration: none; border-bottom: 1.5px solid currentColor;">instagram.com/ferro.world</a>
-                </p>
+                <a href="/cdn-cgi/l/email-protection#721a171e1e1d32141700001d5c051d001e16" class="contact-email"><span class="__cf_email__" data-cfemail="9cf4f9f0f0f3dcfaf9eeeef3b2ebf3eef0f8">[email&#160;protected]</span></a>
+            </div>
+            <div style="margin-top: 32px;" class="animate-in stagger-3">
+                <a href="https://instagram.com/ferro.world" target="_blank" class="contact-social">instagram.com/ferro.world</a>
             </div>
         </div>
     </section>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ── Centered logo splash → nav animation ─────────────────────────
+        const logoSplash = document.getElementById('logoSplash');
+        const navLogo = document.getElementById('navLogo');
+        let splashDone = false;
+
+        function triggerLogoToNav() {
+            if (splashDone) return;
+            splashDone = true;
+            logoSplash.classList.add('scrolled');
+            // After transition, swap to real nav logo
+            logoSplash.addEventListener('transitionend', function handler(e) {
+                if (e.propertyName !== 'transform') return;
+                logoSplash.removeEventListener('transitionend', handler);
+                navLogo.classList.remove('nav-logo-hidden');
+                logoSplash.classList.add('hidden');
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) triggerLogoToNav();
+        }, { passive: true });
+
+        // Also trigger on any touch move (for mobile)
+        window.addEventListener('touchmove', () => {
+            if (window.scrollY > 10) triggerLogoToNav();
+        }, { passive: true });
+
         // ── Hamburger / mobile menu ───────────────────────────────────────
         const hamburger = document.getElementById('hamburger');
         const mobileMenu = document.getElementById('mobileMenu');
